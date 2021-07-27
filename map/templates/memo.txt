@@ -1,0 +1,7 @@
+
+    시간되면 할 것
+    -global moduel에서 header부분 전부 복붙해서 쓰는 게 아니라 global moduel에 map moduel 확장하는 방식으로 구현하기
+
+    진행중인 사항
+    -addOneLine()을 활용해서 addCycleLine()을 애니메이션처럼 만들기
+    -setInterval(), setTimeOut()안에 addOneLine()사용하면 제대로 동작 안 함...

@@ -1,0 +1,7 @@
+django==1.8
+googlemaps==4.4.5
+pymysql==1.0.2
+matplotlib
+pandas==1.2.3
+gsw==3.4.0
+django-dotenv==1.4.2

@@ -1,0 +1,456 @@
+{% extends "global/base_site.html" %}
+{% load staticfiles %}
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'css/sb-admin-2.css'%}">
+
+<meta http-equiv="X-UA-Compatible" content="IE=chrome">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="{% static 'js/admin.js' %}"></script>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript"
+        src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js"></script>
+
+{% comment %} <link href="/static/css/select2.css" rel="stylesheet"/> {% endcomment %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<!-- Custom fonts for this template-->
+<link href="{%static 'vendor/fontawesome-free/css/all.min.css'%}" rel="stylesheet" type="text/css">
+<link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="{%static 'css/sb-admin-2.css'%}" rel="stylesheet">
+
+<!-- Bootstrap core JavaScript-->
+<script src="{% static 'vendor/jquery/jquery.min.js'%}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="{%static 'vendor/jquery-easing/jquery.easing.min.js'%}"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="{%static 'js/sb-admin-2.min.js'%}js/sb-admin-2.min.js"></script>
+
+<!-- static에서 css/map을 load -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/map/styles.css' %}">
+<!-- static에서 map.js를 load -->
+<script src="{% static 'js/map/map.js' %}"></script>
+{% endblock %}
+
+{% block breadcrumbs %}
+{% endblock %}
+{% block content %}
+
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
+
+<!-- argo-marker-content 작업 중 -->
+<!-- <div class="argo-marker-content">
+    <div class="argo-marker-content__title">
+        <div>
+            <span class="argo-number">ArogoNumber: N</span>
+            <i class="fas fa-table fa-lg" onclick="moveArgoTable()"></i>
+        </div>
+        <div>
+            <i class="fas fa-file-download fa-lg" onclick="downloadArgoData()"></i>
+        </div>
+    </div>
+    <div class="argo-marker-content__cycle">
+        <div>
+            <span onclick="showCycle()">Show trajectory</span>
+        </div>
+    </div>
+    <div class="argo-marker-content__summary">
+        <div>
+            <div>
+                <span class="argo-subtext">Launched</span>
+            </div>
+            <div>
+                <span class="argo-text">OO/OO/2021</span>
+                <span class="argo-text"> 00:00</span>
+            </div>
+            <div>
+                <span class="argo-subtext">Last Cycle</span>
+            </div>
+            <div>
+                <span class="argo-text">M</span>
+            </div>
+        </div>
+        <div>
+            <div>
+                <span class="argo-subtext">Visualization</span>
+            </div>
+            <div>
+                <i class="fas fa-chart-bar fa-lg" onclick="visualizeArgoData()"></i>
+            </div>
+            <div>
+                <span class="argo-subtext">Last Tx</span>
+            </div>
+            <div>
+                <span class="argo-text">OO/OO/2021</span>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- cycle-marker-content 작업 중 -->
+<!-- <div class="argo-marker-content">
+    <div class="argo-marker-content__title">
+        <div>
+            <span class="argo-number">N - Cycle m</span>
+            <i class="fas fa-table fa-lg"></i>
+        </div>
+        <div>
+            <i class="fas fa-file-download fa-lg"></i>
+        </div>
+    </div>
+    <div class="argo-marker-content__summary">
+        <div>
+            <div>
+                <span class="argo-subtext">Date</span>
+            </div>
+            <div>
+                <span class="argo-text">OO/OO/2021</span>
+                <span class="argo-text"> 00:00</span>
+            </div>
+            <div>
+                <span class="argo-subtext">Latitude</span>
+            </div>
+            <div>
+                <span class="argo-text">OO.OOO</span>
+            </div>
+        </div>
+        <div>
+            <div>
+                <span class="argo-subtext">Visualization</span>
+            </div>
+            <div>
+                <i class="fas fa-chart-bar fa-lg"></i>
+            </div>
+            <div>
+                <span class="argo-subtext">Longitude</span>
+            </div>
+            <div>
+                <span class="argo-text">OO.OOO</span>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!--The div element for the map -->
+<div class="box">
+      <div id="map" style="height:800px"></div>
+</div>
+
+    <div id="modal-argo" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">
+                        Argo 기기별 데이터 시각화
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <img src="{%static 'graph/tsd.png'%}" width="600px" height="600px" style="margin-left:60px;">
+                    <img src="{%static 'graph/3d.png'%}" width="800px" height="600px">
+                    <img src="{%static 'graph/long_ps.png'%}" width="350px" height="400px">
+                    <img src="{%static 'graph/lat_ps.png'%}" width="350px" height="400px">
+                    <img src="{%static 'graph/long_pt.png'%}" width="350px" height="400px">
+                    <img src="{%static 'graph/lat_pt.png'%}" width="350px" height="400px">
+                    <img src="{%static 'graph/3d-2.png'%}" width="700px" height="600px">
+                    <img src="{%static 'graph/3d-3.png'%}" width="700px" height="600px">
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <div class="float-left mx-auto">
+                        <button type="button" class="btn btn-default border" data-dismiss="modal">창닫기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- modal end -->
+
+    <!-- modal content -->
+    <div id="modal-cycle" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">
+                        Depth별 데이터 분포
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <div style="width:400px;height:700px;display:inline-block;margin-left:60px">
+                        <canvas style="width:400px; height:700px;" id="chart1"></canvas>
+                    </div>
+                    <div style="width:400px;height:700px;display:inline-block;margin-left:55px">
+                        <canvas style="width:400px; height:700px;"id="chart2"></canvas>
+                    </div>
+                    <div style="width:400px;height:700px;display:inline-block;margin-left:55px">
+                        <canvas style="width:400px; height:700px;" id="chart3"></canvas>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <div class="float-left mx-auto">
+                        <button type="button" class="btn btn-default border" data-dismiss="modal">창닫기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- modal end -->
+
+<!-- views -> DB -> ORM객체 -> JSON -> script -> initMap() -->
+<script>
+    let argos = JSON.parse("{{ argosJson|escapejs }}");
+    // 아래와 같은 형태
+    // [
+    //     {number: "a", lat: b, long: c},
+    //     {number: "d", lat: e, long: f},
+    //     {number: "g", lat: h, long: i},
+    //     ...
+    // ]
+</script>
+
+<!-- 구글맵 -->
+<script>
+    let Google_Maps_API_KEY = "{{api_key}}";
+    var script = document.createElement('script');
+    script.src = "https://maps.googleapis.com/maps/api/js?key="+Google_Maps_API_KEY+"&callback=initMap&libraries=&v=weekly";
+    script.async='async';
+    document.body.appendChild(script);
+</script>
+
+
+<!-- fontawesome -->
+<script
+src="https://kit.fontawesome.com/6478f529f2.js"
+crossorigin="anonymous"
+></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#data_visual").click(function () {
+            $("#modal-argo").modal('show');
+        });
+    });
+    
+    $('#data_update').click(function() {
+        location.reload(true);
+    });
+</script>
+
+<script>
+        chartIt();
+        async function chartIt() {
+            const data = await getData();
+
+            const ctx1 = document.getElementById("chart1").getContext('2d');
+            const myChart1 = new Chart(ctx1, {
+                type: 'line', // bar, line, scatter, pie, radar 등으로 바꿀 수 있음.
+                data: {
+                    labels: data.tpxs,
+                    datasets: [
+                        {
+                            label: 'Pressure',
+                            data: data.tpys,
+                            type: 'line',
+                            fill: false,
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1,
+                            order: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            display: true,
+                            reverse: true,
+                            title: {
+                                color: 'rgba(255, 99, 132, 1)',
+                                display: true,
+                                text: 'Temperature (°C)'
+                            }
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                color: 'rgba(255, 99, 132, 1)',
+                                display: true,
+                                text: 'Pressure (Pa)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'T-P (Temperature and Pressure) Diagram - Cycle 1'
+                        }
+                    }
+                }
+            });
+
+            const ctx2 = document.getElementById("chart2").getContext('2d');
+            const myChart2 = new Chart(ctx2, {
+                type: 'line', // bar, line, scatter, pie, radar 등으로 바꿀 수 있음.
+                data: {
+                    labels: data.psxs,
+                    datasets: [
+                        {
+                            label: 'Salinity',
+                            data: data.psys,
+                            type: 'line',
+                            fill: false,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1,
+                            order: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            title: {
+                                color: 'rgba(54, 162, 235, 1)',
+                                display: true,
+                                text: 'Pressure (Pa)'
+                            }
+                        },
+                        y: {
+                            display: true,
+                            max: 34.7,
+                            min: 33.5,
+                            ticks: {
+                                stepSize: 0.1
+                            },
+                            title: {
+                                color: 'rgba(54, 162, 235, 1)',
+                                display: true,
+                                text: 'Salinity (psu)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'P-S (Pressure and Salinity) Diagram - Cycle 1'
+                        }
+                    }
+                }
+            });
+
+            const ctx3 = document.getElementById("chart3").getContext('2d');
+            const myChart3 = new Chart(ctx3, {
+                type: 'line', // bar, line, scatter, pie, radar 등으로 바꿀 수 있음.
+                data: {
+                    labels: data.tsxs,
+                    datasets: [
+                        {
+                            label: 'Salinity',
+                            data: data.tsys,
+                            type: 'line',
+                            fill: false,
+                            backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                            borderColor: 'rgba(255, 159, 64, 1)',
+                            borderWidth: 1,
+                            order: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            display: true,
+                            reverse: true,
+                            title: {
+                                color: 'rgba(255, 159, 64, 1)',
+                                display: true,
+                                text: 'Temperature (°C)'
+                            }
+                        },
+                        y: {
+                            display: true,
+                            max: 34.7,
+                            min: 33.5,
+                            ticks: {
+                                stepSize: 0.1
+                            },
+                            title: {
+                                color: 'rgba(255, 159, 64, 1)',
+                                display: true,
+                                text: 'Salinity (psu)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'T-S (Temperature and Salinity) Diagram - Cycle 1'
+                        }
+                    }
+                }
+            });
+        };
+
+        async function getData() {
+            const tpxs = [];
+            const tpys = [];
+
+            const psxs = [];
+            const psys = [];
+
+            const tsxs = [];
+            const tsys = [];
+
+            const response = await fetch('/static/csv_file/chart_test.csv');
+            const data = await response.text();
+
+            const table = data.split('\n').slice(1); // data.csv의 첫 줄(변수명)을 슬라이싱
+            table.forEach(row => {
+                const columns = row.split(',');
+
+                const temp = columns[3];
+                tpxs.push(temp);
+                tsxs.push(temp);
+
+                const pres = columns[5];
+                psxs.push(pres);
+                tpys.push(pres);
+
+                const salt = columns[4];
+                tsys.push(salt);
+                psys.push(salt);
+            });
+            return { tpxs, tpys, psxs, psys, tsxs, tsys };
+        }
+    </script>
+{% endblock %}
+
+<script type="text/javascript" charset="utf-8" src="{% static 'js/task.js' %}"></script>

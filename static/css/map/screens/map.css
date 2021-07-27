@@ -1,0 +1,111 @@
+/* Set the size of the div element that contains the map */
+#map {
+  height: 800px;
+  /* The height is 400 pixels */
+  width: 100%;
+  /* The width is the width of the web page */
+}
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* argo-marker-content */
+
+.argo-marker-content {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  opacity: 0.7;
+  width: 250px;
+  height: 130px;
+  /* border: 1px solid black; */
+}
+
+.argo-marker-content:hover {
+  opacity: 1;
+  transition: 1s;
+}
+
+.cycle-marker-content {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  opacity: 0.7;
+  width: 200px;
+  height: 90px;
+  /* border: 1px solid black; */
+}
+
+.cycle-marker-content:hover {
+  opacity: 1;
+  transition: 1s;
+}
+
+.argo-marker-content__title {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
+
+.argo-marker-content__cycle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.argo-marker-content__cycle span {
+  font-size: 15px;
+  color: black;
+  font-weight: bold;
+}
+
+.argo-marker-content__cycle span:hover {
+  color: blue;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.argo-marker-content__summary {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* icon */
+
+i.fas:hover {
+  font-size: 20px;
+}
+
+.fa-table {
+  color: green;
+}
+
+.fa-file-download {
+  columns: red;
+}
+
+.fa-chart-bar {
+  color: skyblue;
+}
+
+/* font */
+
+.argo-number {
+  color: var(--main-color);
+  /* font-weight: bold; */
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.argo-subtext {
+  font-size: 11px;
+}
+
+.argo-text {
+  /* color: black; */
+  /* font-weight: bold; */
+  font-size: 15px;
+}

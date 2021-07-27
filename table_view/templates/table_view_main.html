@@ -1,0 +1,151 @@
+{% extends "global/base_site.html" %}
+{% load staticfiles %}
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+    <a href="">홈</a>
+    </div>
+{% endblock %}
+{% block content %}
+<div><h3>Argo Informtion Main Table</h3></div>
+
+<div class="row no-gutters justify-content-end">
+    <form class="col-lg-10 col-sm-8 col-12 toolbar-forms d-sm-flex d-inline col-9 justify-content-end" method="get">
+        {% csrf_token %}
+        <div class="col-lg-9 col-md-8 col-sm-8 col-12 d-flex px-0 pr-lg-2 pr-md-2 pr-sm-2 mb-2">
+            <label class="col-1 px-0 text-center mb-0 align-self-center">시리얼번호</label>
+            <input type="text" class="form-control with-icon col-3 h-90 mr-2" id="search-num" placeholder="Search number" name="search-num">
+            <label class="col-1 px-0 text-center mb-0 align-self-center">공개여부</label>
+            <select class="form-control form-control-sm col-2 h-100 mr-2" name="open-search">
+                <option value="-1" selected>전체</option>
+                <option value="1">공개</option>
+                <option value="0">비공개</option>
+            </select>
+            <label class="col-1 px-0 text-center mb-0 align-self-center">작동여부</label>
+            <select class="form-control form-control-sm col-2 h-100 mr-2" name="work-search">
+                <option value="-1" selected>전체</option>
+                <option value="1">정상</option>
+                <option value="0">미작동</option>
+            </select>
+            <button type='submit' class="btn btn-primary w-100 h-90">검색</button>
+        </div>
+    </form>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover" id="Argo_table">
+        <thead>
+            <tr class="text-center">
+                <th>Serial number</th>
+                <th>최근관측 위도</th>
+                <th>최근관측 경도</th>
+                <th>최근관측 시간</th>
+                <th>데이터 공개여부</th>
+                <th>작동여부</th>
+                <th>Download</th>
+                <th>Detail</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for obj in contacts %}
+                <tr data-pk="{{ obj.id }}" >
+                    <td id="serial" style="vertical-align:middle">{{ obj.Serial_number }}</td>
+                    <td style="vertical-align:middle">{{ obj.Last_location_lat }}</td>
+                    <td style="vertical-align:middle">{{ obj.Last_location_long }}</td>
+                    <td style="vertical-align:middle">{{ obj.Last_time }}</td>
+                    <td style="vertical-align:middle">{%if obj.Open_state%}공개{%else%}비공개{%endif%}</td>
+                    <td style="vertical-align:middle">{% if obj.Live %}정상{%else%}미작동{%endif%}</td>
+                    <td style="text-align: center; vertical-align:middle;"><img src="{%static 'img/download.png'%}" width="30" height="30" id="download" style="cursor:pointer;"></td>
+                    <td style="text-align: center; vertical-align:middle;"><button id="more" class="btn btn-secondary w-80 h-80">more</Button></td>
+                </tr>
+                
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+    {% include "global/pagination.html" %}
+
+<!-- modal content -->
+    <div id="modal-add" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="float-left mx-auto">
+                        <div>
+                        <img src="{%static 'graph/test.png'%}" width="100%" height="70%">
+                        <button type="button" class="btn btn-default border" data-dismiss="modal" style="margin-left:345px; margin-right:345px;">창닫기</button>
+                        </div>
+                </div>
+
+            </div>
+        </div>
+    </div><!-- modal end -->
+
+
+    <script type="text/javascript">
+    //using for 403 error about crsf_token
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue =   decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+    $(document).ready(function () {
+        $("td #download").click(function () {
+            var getIdFromRow = $(this).closest('tr');
+            getPk = $(this).closest('tr').data('pk');
+            console.log(getPk)
+            $.ajax({
+                url: "/table_view/download/" + getPk,
+                type: "GET",
+                dataType: "json",
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    pk: getPk,
+                },
+                success: function(data) {
+                    alert(data.message);
+                    download_url = '../../static/csv_file/download.csv'
+                    window.location.assign(download_url);
+                    console.log("SUCCESS!")
+                },
+                error: function(data) {
+                    download_url = '../../static/csv_file/download.csv'
+                    window.location.assign(download_url);
+                    console.log("ERROR!")
+                },
+            });
+        });
+
+    });
+
+    $("td #more").click(function () {
+            var getIdFromRow = $(this).closest('tr');
+            getPk = $(this).closest('tr').data('pk');
+            console.log(getPk)
+            window.location.href = '/table_view/detail/' + getPk;
+        });
+</script>
+{% endblock %}

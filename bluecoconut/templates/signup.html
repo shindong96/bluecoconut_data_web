@@ -1,0 +1,190 @@
+<html lang="en">
+{% load staticfiles %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>bluecoconut - Sginup</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="{%static 'vendor/fontawesome-free/css/all.min.css'%}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{%static 'css/sb-admin-2.css'%}" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-primary">
+    <div class="container">
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }} alert-auto-dismissible alert-dismissible notification-container text-center" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {{ message }}
+                        </div>
+                {% endfor %}
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block"><img src="{%static 'img/login_image.png'%}" width="400" height="500" style="margin-left:30; margin-top:35"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">계정 만들기</h1>
+                            </div>
+                            <form class="user" method="post" id="user-add-form">{% csrf_token %}
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        {{form.name}}
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-user" id="userID" name="userID"
+                                            placeholder="아이디">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="password" class="form-control form-control-user"
+                                            id="password" name="password" placeholder="비밀번호">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="password" class="form-control form-control-user"
+                                            id="password2" name="password2" placeholder="비밀번호 확인">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control form-control-user" id="email" name="email"
+                                        placeholder="이메일">
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        {{form.nationality}}
+                                    </div>
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        {{form.contactNum}}
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        {{form.researcherNumber}}
+                                    </div>
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        {{form.memberType}}
+                                    </div>
+                                </div>
+                                <input class="btn btn-primary btn-user btn-block" type="submit" value="회원등록">
+                                <hr>
+                                <a href="index.html" class="btn btn-google btn-user btn-block">
+                                    <i class="fab fa-google fa-fw"></i> 구글 계정으로 회원등록
+                                </a>
+                                <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                    <i class="fab fa-facebook-f fa-fw"></i> 페이스북 계정으로 회원등록
+                                </a>
+                            </form>
+                            <hr>
+                            <div class="text-center">
+                                <a class="small" href="forgot-password.html">비밀번호를 잊어버리셨나요?</a>
+                            </div>
+                            <div class="text-center">
+                                <a class="small" href="/accounts/login">이미 게정이 있으신가요?</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        window.setTimeout(function() {
+            $(".alert-auto-dismissible").fadeTo(500, 0).slideUp(500, function(){
+                $(this).remove();
+            });
+        }, 4000);
+    </script>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'vendor/jquery/jquery.min.js'%}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{%static 'vendor/jquery-easing/jquery.easing.min.js'%}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{%static 'js/sb-admin-2.min.js'%}js/sb-admin-2.min.js"></script>
+
+    {% comment %} <script type="text/javascript">
+        //using for 403 error about crsf_token
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue =   decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+    
+        $(document).ready(function () {
+            $('#user_add').click(() => {
+                let form = document.forms['user-add-form'];
+                $.ajax({
+                    url: "/accounts/signup/user_add",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        'csrfmiddlewaretoken': '{{ csrf_token }}',
+                        name: form['name'].value,
+                        userID: form['userID'].value,
+                        password: form['password'].value,
+                        password2: form['password2'].value,
+                        email: form['email'].value,
+                        nationality: form['nationality'].value,
+                        contactNum: form['contactNum'].value,
+                        researcherNumber: form['researcherNumber'].value,
+                        memberType: form['memberType'].value,
+                    },
+                    success: function(data) {
+                        alert(data.message);
+                        if(data.status)
+                            console.log("!!!!!!!!")
+                            location.reload();
+                    },
+                    error: function(data) {
+                        alert(data.message);
+                    },
+                });
+            });
+
+        });
+    </script> {% endcomment %}
+
+</body>
+
+</html>
