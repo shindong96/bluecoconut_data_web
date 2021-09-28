@@ -2,11 +2,6 @@
 
 
 
-## **⦁ 설명 영상 (9분)**
-
-   ⦁ - 
-
-
 ## **⦁ PDF 보고서 (p24)**
 
    ⦁  - https://github.com/shindong96/bluecoconut_data_web/blob/main/bluecoconut_website%20%EB%B3%B4%EA%B3%A0%EC%84%9C.pdf
